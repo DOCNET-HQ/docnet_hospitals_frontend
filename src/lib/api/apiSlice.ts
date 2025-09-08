@@ -89,8 +89,8 @@ export const apiSlice = createApi({
                         id: response.user.user_id,
                         profileId: response.user.profile_id,
                         kycStatus: response.user.kyc_status,
-                    }
-                }
+                    },
+                };
             },
         }),
 
