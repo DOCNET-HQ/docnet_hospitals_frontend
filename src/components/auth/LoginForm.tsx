@@ -65,22 +65,45 @@ export function LoginForm({
             )
 
             router.push('/')
-        } catch (error: any) {
-            console.log(error)
-            setErrors({
-                email: error.data?.email,
-                password: error.data?.password,
-                general: (
-                    !error.data?.email &&
-                    !error.data?.password &&
-                    (
-                        error.data?.role ||
-                        error.data?.message ||
-                        'Login failed. Please try again.'
-                    )
-                )
-            })
+        } catch (error: unknown) {
+            console.log(error);
+
+            if (
+                typeof error === "object" &&
+                error !== null &&
+                "data" in error
+            ) {
+                const err = error as {
+                    data?: {
+                        email?: string;
+                        password?: string;
+                        role?: string;
+                        message?: string;
+                    };
+                };
+
+                setErrors({
+                    email: err.data?.email,
+                    password: err.data?.password,
+                    general:
+                        !err.data?.email && !err.data?.password
+                        ?
+                            (
+                                err.data?.role ||
+                                err.data?.message ||
+                                "Login failed. Please try again."
+                            )
+                        : undefined,
+                });
+            } else {
+                setErrors({
+                    email: undefined,
+                    password: undefined,
+                    general: "Login failed. Please try again.",
+                });
+            }
         }
+
     }
 
     return (
