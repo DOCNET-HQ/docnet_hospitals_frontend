@@ -266,13 +266,12 @@ export function RegisterForm({
             const result = await register(formData).unwrap()
 
             // Store auth data in Redux (if registration returns auth data)
-            if (result.user && result.token) {
+            if (result.user && result.access && result.refresh) {
                 dispatch(
                     setCredentials({
                         user: result.user,
-                        role: result.role,
-                        token: result.token,
-                        refreshToken: result.refreshToken,
+                        token: result.access,
+                        refreshToken: result.refresh,
                     })
                 )
                 router.push('/')
@@ -280,26 +279,46 @@ export function RegisterForm({
                 // If registration doesn't auto-login, redirect to verify account
                 router.push('/auth/verify-account?message=Registration successful. Please verify your email.')
             }
-        } catch (error: any) {
-            console.log(error)
-            setErrors({
-                name: error.data?.name,
-                email: error.data?.email,
-                phone_number: error.data?.phone_number,
-                password: error.data?.password,
-                country: error.data?.country,
-                general: (
-                    !error.data?.name &&
-                    !error.data?.email &&
-                    !error.data?.phone_number &&
-                    !error.data?.password &&
-                    !error.data?.country &&
-                    (
-                        error.data?.message ||
-                        'Registration failed. Please try again.'
-                    )
-                )
-            })
+        } catch (error: unknown) {
+            console.log(error);
+
+            if (typeof error === "object" && error !== null && "data" in error) {
+                const err = error as {
+                    data?: {
+                        name?: string;
+                        email?: string;
+                        phone_number?: string;
+                        password?: string;
+                        country?: string;
+                        message?: string;
+                    };
+                };
+
+                setErrors({
+                    name: err.data?.name,
+                    email: err.data?.email,
+                    phone_number: err.data?.phone_number,
+                    password: err.data?.password,
+                    country: err.data?.country,
+                    general:
+                        (!err.data?.name &&
+                        !err.data?.email &&
+                        !err.data?.phone_number &&
+                        !err.data?.password &&
+                        !err.data?.country)
+                            ? (err.data?.message || "Registration failed. Please try again.")
+                            : undefined,
+                });
+            } else {
+                setErrors({
+                    name: undefined,
+                    email: undefined,
+                    phone_number: undefined,
+                    password: undefined,
+                    country: undefined,
+                    general: "Registration failed. Please try again.",
+                });
+            }
         }
     }
 
