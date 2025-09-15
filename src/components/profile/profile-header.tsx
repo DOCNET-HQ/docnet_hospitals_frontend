@@ -24,7 +24,7 @@ export default function ProfileHeader() {
           <div className="flex-1 space-y-2">
             <div className="flex flex-col gap-2 md:flex-row md:items-center">
               <h1 className="text-2xl font-bold">John Doe</h1>
-              <Badge variant="secondary">Pro Member</Badge>
+              <Badge variant="secondary" className={`bg-green-600 text-white`}>Verified</Badge>
             </div>
             <p className="text-muted-foreground">Senior Product Designer</p>
             <div className="text-muted-foreground flex flex-wrap gap-4 text-sm">
