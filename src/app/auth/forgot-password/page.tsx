@@ -1,3 +1,4 @@
+import { PasswordResetRequestForm } from '@/components/auth/PasswordResetRequest'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -6,5 +7,5 @@ export const metadata: Metadata = {
 }
 
 export default function ForgotPasswordPage() {
-    return <div>Forgot Password Page</div>
+    return <PasswordResetRequestForm />
 }
