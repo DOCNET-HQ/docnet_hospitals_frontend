@@ -18,8 +18,8 @@ export default function KYC() {
         <TabsContent value="kyc" className="space-y-6">
             <Card>
                 <CardHeader>
-                    <CardTitle>Personal Information</CardTitle>
-                    <CardDescription>Update your personal details and profile information.</CardDescription>
+                    <CardTitle>KYC Information</CardTitle>
+                    <CardDescription>Update your hospital KYC information.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
