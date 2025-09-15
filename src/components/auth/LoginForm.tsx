@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -12,6 +12,7 @@ import { useAppDispatch } from "@/hooks/redux"
 import { setCredentials } from "@/lib/store/slices/authSlice"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { User } from '@/types/api'
+
 
 export function LoginForm({
     className,
@@ -25,6 +26,9 @@ export function LoginForm({
     const [login, { isLoading }] = useLoginMutation()
     const dispatch = useAppDispatch()
     const router = useRouter()
+
+    const searchParams = useSearchParams();
+    const message = searchParams.get("message");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -111,7 +115,11 @@ export function LoginForm({
             <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold text-foreground">Login to your account</h1>
                 <p className="text-muted-foreground text-sm text-balance">
-                    Enter your email below to login to your account
+                    {
+                        message
+                        ||
+                        "Enter your email below to login to your account"
+                    }
                 </p>
             </div>
 
