@@ -113,6 +113,29 @@ export const apiSlice = createApi({
             }),
         }),
 
+        requestPasswordReset: builder.mutation({
+            query: (credentials) => ({
+                url: '/users/password-reset/',
+                method: 'POST',
+                body: {
+                    email: credentials.email,
+                },
+            }),
+            invalidatesTags: ['User']
+        }),
+
+        resetPassword: builder.mutation({
+            query: (credentials) => ({
+                url: `/users/password-reset-confirm/${credentials.uidb64}/${credentials.token}/`,
+                method: 'POST',
+                body: {
+                    new_password1: credentials.new_password1,
+                    new_password2: credentials.new_password2,
+                },
+            }),
+            invalidatesTags: ['User']
+        }),
+
         // User endpoints
         getUsers: builder.query<
             PaginatedResponse<User>,
@@ -208,6 +231,8 @@ export const apiSlice = createApi({
 export const {
     useLoginMutation,
     useRegisterMutation,
+    useResetPasswordMutation,
+    useRequestPasswordResetMutation,
     useRefreshTokenMutation,
     useGetUsersQuery,
     useGetUserQuery,
