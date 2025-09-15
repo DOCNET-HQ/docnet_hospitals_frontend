@@ -4,6 +4,8 @@ import './globals.css'
 import { ReduxProvider } from '@/components/providers/ReduxProvider'
 import { ThemeProvider } from '@/components/theme/theme-provider'
 
+import { Toaster } from "@/components/ui/sonner"
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -26,7 +28,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ReduxProvider>
-            {children}
+            <main>{children}</main>
+            <Toaster position="top-center" />
           </ReduxProvider>
         </ThemeProvider>
       </body>
