@@ -99,9 +99,12 @@ export function NavUser({
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem className="cursor-pointer">
+                            <DropdownMenuItem
+                                className="cursor-pointer"
+                                onClick={() => router.push('/profile')}
+                            >
                                 <BadgeCheck />
-                                Account
+                                Profile
                             </DropdownMenuItem>
                             <DropdownMenuItem className="cursor-pointer">
                                 <CreditCard />
