@@ -36,7 +36,7 @@ export function NavMain({
                             {
                                 item.icon &&
                                 <item.icon
-                                    className={`text-lg font-semibold ${item.isActive ? "text-white" : "text-black dark:text-white"}`}
+                                    className={`text-lg ml-2 font-semibold ${item.isActive ? "text-white" : "text-black dark:text-white"}`}
                                 />
                             }
                             <span
