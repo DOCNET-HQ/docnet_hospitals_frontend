@@ -12,7 +12,34 @@ import { TabsContent } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 
 
-export default function Personal() {
+type PersonalTabProps = {
+    name: string;
+    email: string;
+    phone_number: string;
+    website: string;
+    country: string;
+    state: string;
+    city: string;
+    address: string;
+    postal_code: string;
+    bio: string;
+};
+
+
+export default function Personal(
+    {
+        name,
+        email,
+        phone_number,
+        website,
+        country,
+        state,
+        city,
+        address,
+        postal_code,
+        bio
+    } : PersonalTabProps
+) {
     return (
         <TabsContent value="personal" className="space-y-6">
             <Card>
@@ -24,47 +51,47 @@ export default function Personal() {
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div className="space-y-2">
                             <Label htmlFor="name">Name</Label>
-                            <Input id="name" defaultValue="Light Hospital" />
+                            <Input id="name" defaultValue={name || ""} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
-                            <Input id="email" type="email" defaultValue="john.doe@example.com" disabled />
+                            <Input id="email" type="email" defaultValue={email || ""} disabled />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="phone_number">Phone Number</Label>
-                            <Input id="phone_number" defaultValue="+1 (555) 123-4567" />
+                            <Input id="phone_number" defaultValue={phone_number || ""} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="website">Website</Label>
-                            <Input id="website" defaultValue="https://www.example.com" />
+                            <Input id="website" defaultValue={website || ""} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="country">Country</Label>
-                            <Input id="country" />
+                            <Input id="country" defaultValue={country || ""} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="state">State</Label>
-                            <Input id="state" />
+                            <Input id="state" defaultValue={state || ""} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="city">City</Label>
-                            <Input id="city" />
+                            <Input id="city" defaultValue={city || ""} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="address">Address</Label>
-                            <Input id="address" />
+                            <Input id="address" defaultValue={address || ""} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="postal_code">Postal Code</Label>
-                            <Input id="postal_code" />
+                            <Input id="postal_code" defaultValue={postal_code || ""} />
                         </div>
                     </div>
                     <div className="space-y-2">
@@ -73,6 +100,7 @@ export default function Personal() {
                             rows={8}
                             id="bio"
                             placeholder="Tell us about your Hospital"
+                            defaultValue={bio || ""}
                         />
                     </div>
 
