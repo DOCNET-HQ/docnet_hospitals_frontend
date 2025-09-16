@@ -136,6 +136,11 @@ export const apiSlice = createApi({
             invalidatesTags: ['User']
         }),
 
+        getProfile: builder.query<any, void>({
+            query: () => '/hospitals/my-profile',
+            providesTags: ['Auth'],
+        }),
+
         // User endpoints
         getUsers: builder.query<
             PaginatedResponse<User>,
@@ -217,12 +222,6 @@ export const apiSlice = createApi({
                     body: formData,
                 }
             },
-        }),
-
-        // Example: Get current user profile
-        getProfile: builder.query<User, void>({
-            query: () => '/auth/profile',
-            providesTags: ['Auth'],
         }),
     }),
 })
