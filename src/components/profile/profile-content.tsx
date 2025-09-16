@@ -1,6 +1,5 @@
 import {
   Tabs,
-  TabsContent,
   TabsList,
   TabsTrigger
 } from "@/components/ui/tabs";
@@ -12,7 +11,7 @@ import Security from "@/components/profile/tabs/security";
 import KYC from "@/components/profile/tabs/kyc";
 
 
-export default function ProfileContent() {
+export default function ProfileContent( { profileData }: { profileData: any } ) {
   return (
     <Tabs defaultValue="personal" className="space-y-6">
       <TabsList className="grid w-full grid-cols-4 bg-muted p-1">
@@ -43,13 +42,34 @@ export default function ProfileContent() {
       </TabsList>
 
       {/* Personal Information */}
-      <Personal />
+      <Personal
+        name={profileData?.name}
+        email={profileData?.email}
+        phone_number={profileData?.phone_number}
+        website={profileData?.website}
+        state={profileData?.state}
+        country={profileData?.country}
+        city={profileData?.city}
+        address={profileData?.address}
+        postal_code={profileData?.postal_code}
+        bio={profileData?.bio}
+      />
 
       {/* KYC Information */}
-      <KYC />
+      <KYC
+        registration_number={profileData?.registration_number}
+        license_name={profileData?.license_name}
+        license_issuance_authority={profileData?.license_issuance_authority}
+        license_number={profileData?.license_number}
+        license_issue_date={profileData?.license_issue_date}
+        license_expiry_date={profileData?.license_expiry_date}
+      />
 
       {/* Account Settings */}
-      <Account />
+      <Account
+        isActive={profileData?.is_active}
+        isVisible={profileData?.is_visible}
+      />
 
       {/* Security Settings */}
       <Security />
