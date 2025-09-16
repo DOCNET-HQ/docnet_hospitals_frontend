@@ -17,7 +17,7 @@ export default function DashboardLayout({
             <SidebarProvider>
                 <DashboardSidebar />
                 <SidebarInset>
-                    <div className="sticky top-0 z-50 bg-background border-b">
+                    <div className="sticky top-0 z-50 bg-background border-b mb-6">
                         <Header />
                     </div>
 
