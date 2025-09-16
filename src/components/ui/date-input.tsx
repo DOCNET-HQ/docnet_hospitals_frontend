@@ -31,10 +31,10 @@ function isValidDate(date: Date | undefined) {
     return !isNaN(date.getTime())
 }
 
-export function DateInput({ id } : { id: string }) {
+export function DateInput({ id, defaultValue=new Date() }: { id: string, defaultValue: any }) {
     const [open, setOpen] = React.useState(false)
     const [date, setDate] = React.useState<Date | undefined>(
-        new Date("2025-06-01")
+        new Date(defaultValue)
     )
     const [month, setMonth] = React.useState<Date | undefined>(date)
     const [value, setValue] = React.useState(formatDate(date))
@@ -60,6 +60,8 @@ export function DateInput({ id } : { id: string }) {
                             setOpen(true)
                         }
                     }}
+                    defaultValue={defaultValue}
+                    readOnly
                 />
                 <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
