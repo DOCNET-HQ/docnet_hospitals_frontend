@@ -13,8 +13,25 @@ import { Button } from "@/components/ui/button";
 import { TabsContent } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 
+type AccountTabProps = {
+    isActive: boolean;
+    isVisible: boolean;
+}
 
-export default function Account() {
+
+export default function Account(
+    { isActive, isVisible }: AccountTabProps
+) {
+
+    const getStatusBgColor = (is_active: boolean) => {
+        if (is_active) {
+            return "border-green-200 bg-green-600"
+        } else {
+            return "border-red-200 bg-red-600"
+        }
+    }
+
+
     return (
         <TabsContent value="account" className="space-y-6">
         <Card>
@@ -25,11 +42,12 @@ export default function Account() {
             <CardContent className="space-y-6">
             <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                <Label className="text-base">Account Status</Label>
-                <p className="text-muted-foreground text-sm">Your account is currently active</p>
+                    <Label className="text-base">Account Status</Label>
+                    <p className="text-muted-foreground text-sm">Your account is currently active</p>
                 </div>
-                <Badge variant="outline" className="border-green-200 bg-green-50 text-green-700">
-                Active
+
+                <Badge variant="outline" className={`${getStatusBgColor(isActive)} text-white py-2 px-3 rounded-full`}>
+                { isActive ? "Active" : "Not Active" }
                 </Badge>
             </div>
             <Separator />
@@ -38,7 +56,7 @@ export default function Account() {
                 <Label className="text-base">Subscription Plan</Label>
                 <p className="text-muted-foreground text-sm">Pro Plan - $29/month</p>
                 </div>
-                <Button variant="outline">Manage Subscription</Button>
+                        <Button variant="outline" className="cursor-pointer">Manage Subscription</Button>
             </div>
             <Separator />
             <div className="flex items-center justify-between">
@@ -48,7 +66,7 @@ export default function Account() {
                     Make your profile visible to other users
                 </p>
                 </div>
-                <Switch defaultChecked />
+                <Switch className="cursor-pointer" defaultChecked={isVisible} />
             </div>
             <Separator />
             <div className="flex items-center justify-between">
