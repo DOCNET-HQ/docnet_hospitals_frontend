@@ -13,7 +13,26 @@ import { DateInput } from "@/components/ui/date-input";
 import { FileUploader } from "@/components/utils/file-uploader";
 
 
-export default function KYC() {
+type KYCTabProps = {
+    registration_number: string;
+    license_name: string;
+    license_issuance_authority: string;
+    license_number: string;
+    license_issue_date: string;
+    license_expiry_date: string;
+};
+
+
+export default function KYC(
+    {
+        registration_number,
+        license_name,
+        license_issuance_authority,
+        license_number,
+        license_issue_date,
+        license_expiry_date,
+    } : KYCTabProps
+) {
     return (
         <TabsContent value="kyc" className="space-y-6">
             <Card>
@@ -25,32 +44,32 @@ export default function KYC() {
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div className="space-y-2">
                             <Label htmlFor="registration_number">Registration Number</Label>
-                            <Input id="registration_number" />
+                            <Input id="registration_number" defaultValue={registration_number} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="license_name">License Name</Label>
-                            <Input id="license_name" />
+                            <Input id="license_name" defaultValue={license_name} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="license_issuance_authority">License Issuance Authority</Label>
-                            <Input id="license_issuance_authority" />
+                            <Input id="license_issuance_authority" defaultValue={license_issuance_authority} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="license_number">License Number</Label>
-                            <Input id="license_number" />
+                            <Input id="license_number" defaultValue={license_number} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="license_issue_date">License Issue Date</Label>
-                            <DateInput id="license_issue_date" />
+                            <DateInput id="license_issue_date" defaultValue={license_issue_date} />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="license_expiry_date">License Expiry Date</Label>
-                            <DateInput id="license_expiry_date" />
+                            <DateInput id="license_expiry_date" defaultValue={license_expiry_date} />
                         </div>
 
                         <div className="space-y-2">
