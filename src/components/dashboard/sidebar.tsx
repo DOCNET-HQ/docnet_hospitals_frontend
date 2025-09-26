@@ -75,13 +75,24 @@ const data = {
     ]
 }
 
-export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type ProfileData = {
+    id: string;
+    name: string;
+    email: string;
+    photo: string;
+};
+
+type DashboardSidebarProps = React.ComponentProps<typeof Sidebar> & {
+    profileData: ProfileData;
+};
+
+export function DashboardSidebar({ profileData, ...props }: DashboardSidebarProps) {
     const AUTH_USER_DATA = useSelector((state: RootState) => state.auth?.user)
 
     const user = {
-        name: AUTH_USER_DATA?.name || "Hospital",
-        email: AUTH_USER_DATA?.email || "",
-        avatar: AUTH_USER_DATA?.photo || "https://ui.shadcn.com/avatars/shadcn.jpg",
+        name: profileData?.name || AUTH_USER_DATA?.name || "Hospital",
+        email: profileData?.email || AUTH_USER_DATA?.email || "",
+        avatar: profileData?.photo || AUTH_USER_DATA?.photo || "https://ui.shadcn.com/avatars/shadcn.jpg",
     }
 
     return (
