@@ -136,9 +136,23 @@ export const apiSlice = createApi({
             invalidatesTags: ['User']
         }),
 
-        getProfile: builder.query<any, void>({
-            query: () => '/hospitals/my-profile',
+        getBasicProfile: builder.query<any, void>({
+            query: () => '/hospitals/my-basic-profile/',
             providesTags: ['Auth'],
+        }),
+
+        getProfile: builder.query<any, void>({
+            query: () => '/hospitals/my-profile/',
+            providesTags: ['Auth'],
+        }),
+
+        updateProfile: builder.mutation<any, Partial<any>>({
+            query: (profileData) => ({
+                url: '/hospitals/my-profile/',
+                method: 'PATCH',
+                body: profileData,
+            }),
+            invalidatesTags: ['Auth'],
         }),
 
         // User endpoints
@@ -239,7 +253,9 @@ export const {
     useUpdateUserMutation,
     useDeleteUserMutation,
     useUploadFileMutation,
+    useGetBasicProfileQuery,
     useGetProfileQuery,
+    useUpdateProfileMutation,
     // Lazy queries for programmatic usage
     useLazyGetUsersQuery,
     useLazyGetUserQuery,
