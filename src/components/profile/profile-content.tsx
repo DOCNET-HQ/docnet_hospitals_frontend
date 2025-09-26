@@ -63,12 +63,14 @@ export default function ProfileContent( { profileData }: { profileData: any } ) 
         license_number={profileData?.license_number}
         license_issue_date={profileData?.license_issue_date}
         license_expiry_date={profileData?.license_expiry_date}
+        license_document={profileData?.license_document}
+        id_document={profileData?.id_document}
       />
 
       {/* Account Settings */}
       <Account
-        isActive={profileData?.is_active}
-        isVisible={profileData?.is_visible}
+        is_active={profileData?.is_active}
+        is_visible={profileData?.is_visible}
       />
 
       {/* Security Settings */}
