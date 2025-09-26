@@ -8,13 +8,10 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar"
+import { useSelector } from 'react-redux'
+import type { RootState } from '@/lib/store'
 
 const data = {
-    user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "https://ui.shadcn.com/avatars/shadcn.jpg",
-    },
     notifications: {
         count: 3
     },
@@ -51,7 +48,21 @@ function MessageButton({ count } : { count: number }) {
     )
 }
 
-export function Header() {
+type ProfileData = {
+    id: string;
+    name: string;
+    email: string;
+    photo: string;
+};
+
+export function Header({ profileData }: { profileData: ProfileData }) {
+    const AUTH_USER_DATA = useSelector((state: RootState) => state.auth?.user)
+
+    const user = {
+        name: profileData?.name || AUTH_USER_DATA?.name || "Hospital",
+        avatar: profileData?.photo || AUTH_USER_DATA?.photo || "https://ui.shadcn.com/avatars/shadcn.jpg",
+    }
+
     return (
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
             <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -68,7 +79,10 @@ export function Header() {
                     <NotificationButton count={data.notifications.count} />
 
                     <Avatar className="h-8 w-8 rounded-lg">
-                        <AvatarImage src={data.user.avatar} alt={data.user.name} />
+                        <AvatarImage
+                            src={user.avatar}
+                            alt={user.name}
+                        />
                         <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                     </Avatar>
                 </div>
