@@ -25,55 +25,8 @@ import {
 } from "@/components/ui/sidebar"
 import { useSelector } from 'react-redux'
 import type { RootState } from '@/lib/store'
+import { usePathname } from 'next/navigation'
 
-
-const data = {
-    platform: [
-        {
-            name: "DOCNET",
-            logo: GalleryVerticalEnd,
-            plan: "Hospital",
-        }
-    ],
-    navMain: [
-        {
-            title: "Dashboard",
-            url: "/",
-            icon: LayoutDashboard,
-            isActive: true,
-        },
-        {
-            title: "Doctors",
-            url: "/doctors",
-            icon: UserRoundPlus,
-        },
-        {
-            title: "Patients",
-            url: "/patients",
-            icon: CircleUserRound,
-        },
-        {
-            title: "Appointments",
-            url: "/appointments",
-            icon: ClipboardClock,
-        },
-        {
-            title: "Messages",
-            url: "/messages",
-            icon: MessageCircleDashed,
-        },
-        {
-            title: "Reports",
-            url: "/reports",
-            icon: ClipboardMinus,
-        },
-        {
-            title: "AI Assistant",
-            url: "#",
-            icon: Bot,
-        },
-    ]
-}
 
 type ProfileData = {
     id: string;
@@ -93,6 +46,65 @@ export function DashboardSidebar({ profileData, ...props }: DashboardSidebarProp
         name: profileData?.name || AUTH_USER_DATA?.name || "Hospital",
         email: profileData?.email || AUTH_USER_DATA?.email || "",
         avatar: profileData?.photo || AUTH_USER_DATA?.photo || "https://ui.shadcn.com/avatars/shadcn.jpg",
+    }
+
+    const pathname = usePathname();
+    const IsPathActive = (path: string) => {
+        return pathname === path;
+    };
+
+    const data = {
+        platform: [
+            {
+                name: "DOCNET",
+                logo: GalleryVerticalEnd,
+                plan: "Hospital",
+            }
+        ],
+        navMain: [
+            {
+                title: "Dashboard",
+                url: "/",
+                icon: LayoutDashboard,
+                isActive: IsPathActive("/")
+            },
+            {
+                title: "Doctors",
+                url: "/doctors",
+                icon: UserRoundPlus,
+                isActive: IsPathActive("/doctors")
+            },
+            {
+                title: "Patients",
+                url: "/patients",
+                icon: CircleUserRound,
+                isActive: IsPathActive("/patients")
+            },
+            {
+                title: "Appointments",
+                url: "/appointments",
+                icon: ClipboardClock,
+                isActive: IsPathActive("/appointments")
+            },
+            {
+                title: "Messages",
+                url: "/messages",
+                icon: MessageCircleDashed,
+                isActive: IsPathActive("/messages")
+            },
+            {
+                title: "Reports",
+                url: "/reports",
+                icon: ClipboardMinus,
+                isActive: IsPathActive("/reports")
+            },
+            {
+                title: "AI Assistant",
+                url: "/ai-assistant",
+                icon: Bot,
+                isActive: IsPathActive("/ai-assistant")
+            },
+        ]
     }
 
     return (
