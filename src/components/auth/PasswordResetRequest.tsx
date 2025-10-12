@@ -7,7 +7,7 @@ import { Loader2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useRequestPasswordResetMutation } from "@/lib/api/apiSlice"
 
 
@@ -23,7 +23,6 @@ export function PasswordResetRequestForm({
     const [responseMessage, setResponseMessage] = useState<string | null>(null)
 
     const [requestPasswordReset, { isLoading }] = useRequestPasswordResetMutation()
-    const router = useRouter()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
