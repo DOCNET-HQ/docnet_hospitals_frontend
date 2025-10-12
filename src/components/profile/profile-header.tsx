@@ -5,6 +5,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Camera, Calendar, Mail, MapPin, PhoneCall, Loader2 } from "lucide-react";
 import { useState, useRef } from "react";
 import { useUpdateProfileMutation } from "@/lib/api/apiSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { updateUserPhoto } from "@/lib/store/slices/authSlice";
 import { toast } from 'sonner';
 
 type ProfileHeaderProps = {
@@ -30,6 +32,7 @@ export default function ProfileHeader(
     created_at
   }: ProfileHeaderProps
 ) {
+  const dispatch = useAppDispatch();
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -72,7 +75,13 @@ export default function ProfileHeader(
     formData.append('photo', selectedFile);
 
     try {
-      await updateProfile(formData).unwrap();
+      const result = await updateProfile(formData).unwrap();
+      
+      // Sync the new photo URL from backend to Redux store
+      if (result.photo) {
+        dispatch(updateUserPhoto(result.photo));
+      }
+      
       toast.success('Profile photo updated successfully!');
       // Clear the selected image after successful upload
       setSelectedImage(null);
