@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ReduxProvider } from '@/components/providers/ReduxProvider'
 import { ThemeProvider } from '@/components/theme/theme-provider'
 
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
+        <SpeedInsights/>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
