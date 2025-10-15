@@ -71,6 +71,7 @@ const appointmentColumns: ColumnDef<AppointmentData>[] = [
     {
         id: "doctor",
         header: "Doctor",
+        accessorKey: "doctor_name",
         cell: ({ row }) => (
             <div className="flex items-center gap-3">
                 <Avatar className="h-9 w-9">
@@ -91,6 +92,7 @@ const appointmentColumns: ColumnDef<AppointmentData>[] = [
     {
         id: "patient",
         header: "Patient",
+        accessorKey: "patient_name",
         cell: ({ row }) => (
             <div className="flex items-center gap-3">
                 <Avatar className="h-9 w-9">
