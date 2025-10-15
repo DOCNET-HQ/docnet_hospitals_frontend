@@ -4,12 +4,14 @@ import {
     SidebarInset,
     SidebarProvider,
 } from "@/components/ui/sidebar"
+import { useSelector } from "react-redux"
 import { Header } from "@/components/dashboard/header"
-import { Loader } from '@/components/dashboard/loader'
-import ProtectedPage from '@/components/auth/ProtectedPage'
-import { useGetBasicProfileQuery } from '@/lib/api/apiSlice'
+import { Loader } from "@/components/dashboard/loader"
+import ProtectedPage from "@/components/auth/ProtectedPage"
+import { useGetBasicProfileQuery } from "@/lib/api/apiSlice"
 import ErrorDisplay from "@/components/utils/error-display";
 import { DashboardSidebar } from "@/components/dashboard/sidebar"
+import { selectIsAuthenticated } from "@/lib/store/slices/authSlice"
 
 
 export default function DashboardLayout({
@@ -17,22 +19,32 @@ export default function DashboardLayout({
 }: {
     children: React.ReactNode
 }) {
-    const { data: profileData, isLoading, isError, refetch } = useGetBasicProfileQuery();
+    const isAuthenticated = useSelector(selectIsAuthenticated)
+
+    // Only fetch profile if authenticated
+    const { data: profileData, isLoading, isError, refetch } = useGetBasicProfileQuery(
+        undefined, 
+        {
+            skip: !isAuthenticated
+        }
+    );
 
     const refetchProfile = () => {
         refetch();
     };
 
-    if (isLoading) return <Loader />;
+    // Show loader only when authenticated and loading
+    if (isAuthenticated && isLoading) return <Loader />;
 
-    if (isError) {
-    return (
-        <ErrorDisplay
-            title="Failed to Load Profile"
-            onRetry={refetchProfile}
-            type="server"
-        />
-    );
+    // Show error only when authenticated and there's an error
+    if (isAuthenticated && isError) {
+        return (
+            <ErrorDisplay
+                title="Failed to Load Profile"
+                onRetry={refetchProfile}
+                type="server"
+            />
+        );
     }
 
     return (
