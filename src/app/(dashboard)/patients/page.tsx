@@ -13,6 +13,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { IconDotsVertical } from "@tabler/icons-react"
+import Link from "next/link"
 
 // Define your data type
 interface PatientData extends BaseTableData {
@@ -152,7 +153,11 @@ const patientColumns: ColumnDef<PatientData>[] = [
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-40">
-                    <DropdownMenuItem>View Profile ${row.id}</DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Link href={`/doctors/${row.id}`} className="w-full">
+                        View Profile ${row.id}
+                        </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>Edit Details</DropdownMenuItem>
                     <DropdownMenuItem>View Records</DropdownMenuItem>
                     <DropdownMenuSeparator />
