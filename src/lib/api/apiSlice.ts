@@ -9,6 +9,7 @@ import type {
     RegisterRequest,
     PaginatedResponse,
 } from '@/types/api'
+import { get } from 'http'
 
 // Base query with authentication
 const baseQuery = fetchBaseQuery({
@@ -155,6 +156,42 @@ export const apiSlice = createApi({
             invalidatesTags: ['Auth'],
         }),
 
+        // Doctor endpoints
+        addDoctor: builder.mutation<any, Partial<any>>({
+            query: (doctorData) => ({
+                url: '/doctors/create/',
+                method: 'POST',
+                body: doctorData,
+            }),
+            invalidatesTags: ['Auth'],
+        }),
+
+        getDoctors: builder.query<PaginatedResponse<any>, { page?: number; limit?: number }>({
+            query: ({ page = 1, limit = 10 }) => ({
+                url: '/doctors/',
+                params: { page, limit },
+            }),
+            transformResponse: (response: { count: number; next: string | null; previous: string | null; results: any[] }, meta, arg) => {
+                const { page = 1, limit = 10 } = arg || {};
+                return {
+                results: response.results,
+                count: response.count,
+                page: page,
+                limit: limit,
+                totalPages: Math.ceil(response.count / limit),
+                next: response.next,
+                previous: response.previous
+                };
+            },
+            providesTags: (result) =>
+                result
+                ? [
+                    ...result.results.map(({ id }) => ({ type: 'User' as const, id })),
+                    { type: 'User', id: 'LIST' },
+                    ]
+                : [{ type: 'User', id: 'LIST' }],
+        }),
+
         // User endpoints
         getUsers: builder.query<
             PaginatedResponse<User>,
@@ -171,7 +208,7 @@ export const apiSlice = createApi({
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.data.map(({ id }) => ({ type: 'User' as const, id })),
+                        ...result.results.map(({ id }) => ({ type: 'User' as const, id })),
                         { type: 'User', id: 'LIST' },
                     ]
                     : [{ type: 'User', id: 'LIST' }],
@@ -256,6 +293,11 @@ export const {
     useGetBasicProfileQuery,
     useGetProfileQuery,
     useUpdateProfileMutation,
+
+    //Doctors hooks
+    useAddDoctorMutation,
+    useGetDoctorsQuery,
+
     // Lazy queries for programmatic usage
     useLazyGetUsersQuery,
     useLazyGetUserQuery,

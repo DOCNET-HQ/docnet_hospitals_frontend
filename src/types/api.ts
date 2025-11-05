@@ -26,8 +26,8 @@ export interface RegisterRequest {
 }
 
 export interface PaginatedResponse<T> {
-  data: T[]
-  total: number
+  results: T[]
+  count: number
   page: number
   limit: number
   totalPages: number
