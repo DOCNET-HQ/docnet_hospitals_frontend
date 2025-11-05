@@ -154,7 +154,7 @@ export function ChatSidebar() {
     ];
 
     return (
-        <div className="flex w-90 flex-col border border-r rounded-lg max-h-[97%]">
+        <div className="flex w-[30%] flex-col border border-r rounded-lg max-h-[97%]">
             <div className="mb-6 flex items-center justify-between m-4">
                 <h1 className="text-2xl font-bold">Chat</h1>
                 <Search className="text-muted-foreground h-5 w-5 cursor-pointer" />
